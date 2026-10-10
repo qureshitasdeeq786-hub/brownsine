@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ice Cream Bailey Dupont — Premium Single File</title>
+<style>
+:root{
+  --slate-green:#2f4f4f;
+  --accent:#ff4c4c;
+  --bg:#f6f9f7;
+  --card:#ffffff;
+  --text:#222;
+  --muted:#6b7c7c;
+  --shadow:0 10px 30px rgba(0,0,0,.08);
+}
+[data-theme="dark"]{
+  --bg:#1f2a2a;
+  --card:#263535;
+  --text:#e9f3f3;
+  --muted:#a7b7b7;
+  --shadow:0 10px 30px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;font-family:"Poppins",Arial,sans-serif;color:var(--text);background:var(--bg)}
+a{text-decoration:none;color:inherit}
+.container{max-width:1200px;margin:0 auto;padding:0 40px}
+
+/* Header & Banner */
+.header{position:sticky;top:0;z-index:1000;background:var(--slate-green);color:#fff;box-shadow:0 4px 18px rgba(0,0,0,.12)}
+.banner{background:#254646;color:#dff3f0;padding:12px;text-align:center;animation:slideDown .8s ease both}
+@keyframes slideDown{from{transform:translateY(-100%);opacity:0}to{transform:translateY(0);opacity:1}}
+.nav{display:flex;justify-content:space-between;align-items:center;padding:14px 40px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand img{width:44px;height:44px;border-radius:50%;object-fit:cover}
+.nav-links a{color:#fff;margin:0 10px;font-weight:600}
+.actions{display:flex;align-items:center;gap:10px}
+.btn-chip{cursor:pointer;font-weight:700;background:#fff;color:var(--slate-green);padding:8px 14px;border-radius:20px;border:none}
+.btn-chip:hover{opacity:.9}
+.toggle{background:#fff;color:var(--slate-green);border:none;border-radius:20px;padding:8px 14px;cursor:pointer}
+
+/* Hero */
+.hero{
+  background:linear-gradient(135deg, #2f4f4f 0%, #3b5f5f 40%, #4a6f6f 100%);
+  color:#fff;text-align:center;padding:80px 20px;position:relative;overflow:hidden;
+}
+.hero h1{font-size:44px;margin:0 0 10px}
+.hero p{max-width:720px;margin:0 auto 25px;line-height:1.7;color:#e9f3f3}
+.btn{background:var(--accent);border:none;color:#fff;padding:12px 28px;border-radius:30px;cursor:pointer;font-size:16px;box-shadow:var(--shadow);transition:transform .2s ease, box-shadow .2s ease}
+.btn:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(0,0,0,.12)}
+
+/* Sections */
+.section-title{text-align:center;margin:60px 0 25px;font-size:34px;color:var(--slate-green)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:25px;padding-bottom:40px}
+.card{background:var(--card);border-radius:18px;box-shadow:var(--shadow);overflow:hidden;text-align:center;padding-bottom:18px;transition:transform .2s ease, box-shadow .2s ease}
+.card:hover{transform:translateY(-4px);box-shadow:0 16px 36px rgba(0,0,0,.12)}
+.card img{width:100%;height:220px;object-fit:cover}
+.card h3{margin:12px 0 6px}
+.price{color:var(--slate-green);font-weight:700;margin:6px 0}
+.card-actions{display:flex;justify-content:center;gap:10px;margin-top:8px}
+
+/* Filters */
+.filters{display:flex;gap:12px;align-items:center;margin:20px 0}
+.filters input{padding:10px;border-radius:10px;border:1px solid #ddd;background:transparent;color:var(--text)}
+
+/* Video */
+.video-box{text-align:center;padding-bottom:60px}
+video{width:60%;border-radius:14px;box-shadow:var(--shadow)}
+
+/* Forms */
+.form-box{max-width:700px;margin:0 auto 70px;background:var(--card);padding:25px;border-radius:16px;box-shadow:var(--shadow)}
+.form-box input,.form-box textarea{width:100%;padding:10px;margin:8px 0 15px;border-radius:10px;border:1px solid #ddd;background:transparent;color:var(--text)}
+
+/* Footer */
+footer{text-align:center;padding:30px 0;background:var(--slate-green);color:#fff}
+
+/* Modals */
+.modal{position:fixed;top:0;left:0;width:100%;height:100%;background:#00000066;display:none;align-items:center;justify-content:center}
+.modal-content{background:var(--card);padding:25px;border-radius:16px;width:520px;max-width:90vw;box-shadow:0 12px 30px rgba(0,0,0,.15);position:relative;color:var(--text)}
+.close{position:absolute;right:16px;top:12px;cursor:pointer;font-weight:700}
+.cart-items{max-height:300px;overflow:auto;margin-top:10px}
+.cart-item{display:flex;justify-content:space-between;align-items:center;padding:10px;border-bottom:1px solid #eee}
+.qty-controls{display:flex;align-items:center;gap:8px}
+.remove{background:none;border:none;color:#c0392b;cursor:pointer}
+
+/* Auth */
+.auth-box{max-width:420px;margin:40px auto;background:var(--card);padding:24px;border-radius:16px;box-shadow:var(--shadow)}
+.auth-box input{width:100%;padding:10px;margin:8px 0 12px;border-radius:10px;border:1px solid #ddd;background:transparent;color:var(--text)}
+
+/* Admin */
+.admin-wrap{max-width:900px;margin:30px auto;background:var(--card);padding:24px;border-radius:16px;box-shadow:var(--shadow)}
+.table{width:100%;border-collapse:collapse;margin-top:16px}
+.table th,.table td{border-bottom:1px solid #eee;padding:10px;text-align:left}
+
+/* Tabs (multi-section single page) */
+.tabs{display:flex;gap:10px;justify-content:center;margin:20px 0}
+.tab{padding:10px 16px;border-radius:20px;border:1px solid #ddd;background:var(--card);cursor:pointer}
+.tab.active{background:var(--slate-green);color:#fff;border-color:transparent}
+.section{display:none}
+.section.active{display:block}
+
+/* Utility */
+.muted{color:var(--muted)}
+.center{text-align:center}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+  <div class="banner">Free delivery on orders over ₹499 — handcrafted in small batches.</div>
+  <nav class="nav">
+    <div class="brand">
+      <img src="https://marketplace.canva.com/EAGLqT30fTk/3/0/1600w/canva-pink-and-blue-circle-ice-cream-logo-XWRHjY4QPf4.jpg" alt="Logo">
+      <strong>Ice Cream Bailey Dupont</strong>
+    </div>
+    <div class="nav-links">
+      <a href="#" class="nav-link" data-target="home">Home</a>
+      <a href="#" class="nav-link" data-target="about">About</a>
+      <a href="#" class="nav-link" data-target="services">Services</a>
+      <a href="#" class="nav-link" data-target="contact">Contact</a>
+      <a href="#" class="nav-link" data-target="prize">Prize</a>
+      <a href="#" class="nav-link" data-target="orders">Orders</a>
+      <a href="#" class="nav-link" data-target="admin">Admin</a>
+      <a href="#" class="nav-link" data-target="login" id="loginLink">Login</a>
+      <a href="#" class="nav-link" data-target="signup" id="signupLink">Signup</a>
+    </div>
+    <div class="actions">
+      <button class="btn-chip" onclick="openWishlist()">❤️ Wishlist: <span id="wishCount">0</span></button>
+      <button class="btn-chip" onclick="openCart()">🛒 Cart: <span id="cartCount">0</span></button>
+      <button class="toggle" id="themeToggle">Dark Mode</button>
+    </div>
+  </nav>
+</header>
+
+<!-- Tabs for quick section switching -->
+<div class="tabs container">
+  <button class="tab active" data-target="home">Home</button>
+  <button class="tab" data-target="about">About</button>
+  <button class="tab" data-target="services">Services</button>
+  <button class="tab" data-target="contact">Contact</button>
+  <button class="tab" data-target="prize">Prize</button>
+  <button class="tab" data-target="orders">Orders</button>
+  <button class="tab" data-target="admin">Admin</button>
+</div>
+
+<!-- Sections -->
+<main>
+
+  <!-- Home -->
+  <section id="home" class="section active">
+    <div class="hero">
+      <h1>A New Adventure in Ice Cream</h1>
+      <p>Simple, natural, small-batch ice cream using fresh, local ingredients—full of adventure and discovery.</p>
+      <a href="https://www.icecream.com/" target="_blank"><button class="btn">Read More</button></a>
+    </div>
+
+    <div class="container">
+      <div class="filters">
+        <input type="text" id="searchInput" placeholder="Search flavors...">
+        <input type="number" id="minPrice" placeholder="Min ₹">
+        <input type="number" id="maxPrice" placeholder="Max ₹">
+        <button class="btn" id="applyFilters">Apply</button>
+      </div>
+
+      <h2 class="section-title">Our Core Flavors</h2>
+      <div class="grid" id="productGrid"></div>
+
+      <div class="form-box">
+        <h3 class="center">Feedback</h3>
+        <form id="feedbackForm">
+          <input type="text" name="name" placeholder="Your Name" required>
+          <input type="email" name="email" placeholder="Email" required>
+          <textarea rows="4" name="message" placeholder="Write your feedback..." required></textarea>
+          <button class="btn" type="submit">Submit</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about" class="section">
+    <div class="hero">
+      <h1>About Us</h1>
+      <p>We craft ice cream with integrity—local dairy, seasonal fruits, and fair-trade cocoa.</p>
+    </div>
+    <div class="container">
+      <div class="grid">
+        <div class="card"><img src="https://upload.wikimedia.org/wikipedia/commons/3/31/Ice_Cream_dessert_02.jpg" loading="lazy"><h3>cup Ice cream</h3><p>sic as milk an cream an eften combined wi fruits or ither ingredients an flavours.</p></div>
+        <div class="card"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Ice_cream_with_whipped_cream%2C_chocolate_syrup%2C_and_a_wafer_%28cropped%29.jpg/500px-Ice_cream_with_whipped_cream%2C_chocolate_syrup%2C_and_a_wafer_%28cropped%29.jpg" loading="lazy"><h3>Frozen dessert</h3><p>Frozen dessert is a dessert made by freezing liquids, semi-solids, and sometimes solids</p></div>
+        <div class="card"><img src="https://media.gettyimages.com/id/157472912/photo/ice-cream-composition-on-a-bowl.jpg?s=612x612&w=gi&k=20&c=AniWX1OhaarUxCkgjUoKiA3bKVllK0upCylW6Z0PCMQ=" loading="lazy"><h3>Ice cream composition on a bowl</h3><p>This iceream cup mix all flavoer </p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section id="services" class="section">
+    <div class="hero">
+      <h1>Services</h1>
+      <p>Catering, corporate gifting, and event bars—bring joy to any occasion.</p>
+    </div>
+    <div class="container">
+      <div class="grid">
+        <div class="card"><img src="https://images.pexels.com/photos/1352299/pexels-photo-1352299.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" loading="lazy"><h3>Event Catering</h3><p>Custom menus and on-site scooping.</p></div>
+        <div class="card"><img src="https://www.graeters.com/cdn/shop/files/Graeters_smiles.webp?v=1762537598" loading="lazy"><h3>Corporate Gifts</h3><p>Branded pints shipped nationwide.</p></div>
+        <div class="card"><img src="https://i.pinimg.com/736x/dd/46/7e/dd467e8710edd2a1c139a72b6ea5a9c2.jpg" loading="lazy"><h3>Pop-up Bars</h3><p>Interactive tasting experiences.</p></div>
+      </div>
+      <div class="video-box">
+        <video src="c:\Users\Tasdeeq\OneDrive\Desktop\Video\cup icream.mov" controls>
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="section">
+    <div class="hero">
+      <h1>Contact</h1>
+      <p>We’d love to hear from you—reach out for orders or collaborations.</p>
+    </div>
+    <div class="container">
+      <div class="form-box">
+        <form id="contactForm">
+          <input type="text" name="name" placeholder="Your Name" required>
+          <input type="email" name="email" placeholder="Email" required>
+          <textarea rows="4" name="message" placeholder="Your message..." required></textarea>
+          <button class="btn" type="submit">Send</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Prize -->
+  <section id="prize" class="section">
+    <div class="hero">
+      <h1>Awards & Recognitions</h1>
+      <p>Celebrating craft and community.</p>
+    </div>
+    <div class="container">
+      <div class="grid">
+        <div class="card"><img src="https://restaurantindia.s3.ap-south-1.amazonaws.com/s3fs-public/2025-04/Best%20Newly%20Launched%20Ice%20Cream%20Flavour%20to%20Try%20in%202025%20What%E2%80%99s%20Your%20Scoop%20of%20the%20Year.jpg" loading="lazy"><h3>Best Artisan 2025</h3><p>85₹ - 120₹</p></div>
+        <div class="card"><img src="https://kevaflavours.com/wp-content/uploads/2025/05/Evolving_Flavours_in-_Indias_Ice_Cream_Landscape.jpg" loading="lazy"><h3>Flavor Innovation</h3><p>100₹ - 180₹</p></div>
+        <div class="card"><img src="https://img.etimg.com/thumb/width-1200,height-900,imgsize-29442,resizemode-75,msid-115713389/markets/stocks/news/hul-ice-cream-can-be-d-sts-sundae-of-choice-main-street-must-love-it-too.jpg" loading="lazy"><h3>Community Impact</h3><p>25₹ - 70₹</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Orders (mock) -->
+  <section id="orders" class="section">
+    <div class="hero">
+      <h1>Your Orders</h1>
+      <p>Track your past purchases and statuses.</p>
+    </div>
+    <div class="container">
+      <div class="admin-wrap">
+        <table class="table" id="ordersTable">
+          <thead><tr><th>Order ID</th><th>Total</th><th>Status</th><th>Items</th></tr></thead>
+          <tbody></tbody>
+        </table>
+        <div class="center muted" style="margin-top:10px">Orders are stored locally for demo.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Admin (mock) -->
+  <section id="admin" class="section">
+    <div class="hero">
+      <h1>Admin Panel</h1>
+      <p>Add and manage flavors (local demo).</p>
+    </div>
+    <div class="container">
+      <div class="admin-wrap">
+        <form id="addProductForm">
+          <input type="text" name="name" placeholder="Flavor Name" required>
+          <input type="number" name="price" placeholder="Price (₹)" required>
+          <input type="url" name="image" placeholder="Image URL" required>
+          <textarea name="description" placeholder="Description" required></textarea>
+          <button class="btn" type="submit">Add Flavor</button>
+        </form>
+        <table class="table" id="adminTable">
+          <thead><tr><th>Name</th><th>Price</th><th>Actions</th></tr></thead>
+          <tbody></tbody>
+        </table>
+        <div class="center muted" style="margin-top:10px">Admin actions update local product list.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Login -->
+  <section id="login" class="section">
+    <div class="hero">
+      <h1>Login</h1>
+      <p>Access your account (local demo).</p>
+    </div>
+    <div class="container">
+      <div class="auth-box">
+        <form id="loginForm">
+          <input type="text" name="username" placeholder="Username" required>
+          <input type="password" name="password" placeholder="Password" required>
+          <button class="btn" type="submit">Login</button>
+        </form>
+        <div class="muted center" style="margin-top:8px">Use any credentials created via Signup.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Signup -->
+  <section id="signup" class="section">
+    <div class="hero">
+      <h1>Signup</h1>
+      <p>Create your account (local demo).</p>
+    </div>
+    <div class="container">
+      <div class="auth-box">
+        <form id="signupForm">
+          <input type="text" name="username" placeholder="Username" required>
+          <input type="email" name="email" placeholder="Email" required>
+          <input type="password" name="password" placeholder="Password" required>
+          <button class="btn" type="submit">Create Account</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Success/Cancel (mock) -->
+  <section id="success" class="section">
+    <div class="hero">
+      <h1>Thank you!</h1>
+      <p>Your order is confirmed. (Demo success)</p>
+    </div>
+    <div class="container center" style="margin-bottom:40px">
+      <button class="btn" onclick="clearCart()">Clear Cart</button>
+    </div>
+  </section>
+
+  <section id="cancel" class="section">
+    <div class="hero">
+      <h1>Payment Cancelled</h1>
+      <p>Your cart is saved—try again when you’re ready. (Demo cancel)</p>
+    </div>
+  </section>
+
+</main>
+
+<!-- Wishlist Modal -->
+<div class="modal" id="wishlistModal">
+  <div class="modal-content">
+    <span class="close" onclick="closeWishlist()">×</span>
+    <h3>Your Wishlist</h3>
+    <div class="cart-items" id="wishItems"></div>
+  </div>
+</div>
+
+<!-- Cart Modal -->
+<div class="modal" id="cartModal">
+  <div class="modal-content">
+    <span class="close" onclick="closeCart()">×</span>
+    <h3>Your Cart</h3>
+    <div class="cart-items" id="cartItems"></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px">
+      <div>
+        <strong>Total: ₹<span id="cartTotal">0</span></strong>
+        <div style="margin-top:8px">
+          <input type="text" id="promoCode" placeholder="Promo code">
+          <button class="btn" id="applyPromo">Apply</button>
+          <span id="promoMsg" class="muted" style="margin-left:8px"></span>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px">
+        <button class="btn" onclick="mockCheckout('success')">Checkout</button>
+        <button class="btn" style="background:#888" onclick="mockCheckout('cancel')">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>© 2026 Ice Cream Bailey Dupont — All Rights Reserved</footer>
+
+<script>
+/* Theme toggle */
+(function(){
+  const toggle = document.getElementById('themeToggle');
+  const saved = localStorage.getItem('theme')||'light';
+  document.documentElement.setAttribute('data-theme', saved);
+  toggle.textContent = saved==='dark' ? 'Light Mode' : 'Dark Mode';
+  toggle.addEventListener('click', ()=>{
+    const current = document.documentElement.getAttribute('data-theme')||'light';
+    const next = current==='dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    toggle.textContent = next==='dark' ? 'Light Mode' : 'Dark Mode';
+  });
+})();
+
+/* Tabs & nav links */
+const tabs = document.querySelectorAll('.tab');
+const sections = document.querySelectorAll('.section');
+function showSection(id){
+  sections.forEach(s=>s.classList.toggle('active', s.id===id));
+  tabs.forEach(t=>t.classList.toggle('active', t.dataset.target===id));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+tabs.forEach(t=>t.addEventListener('click', ()=>showSection(t.dataset.target)));
+document.querySelectorAll('.nav-link').forEach(a=>{
+  a.addEventListener('click', (e)=>{ e.preventDefault(); showSection(a.dataset.target); });
+});
+
+/* Mock data & state */
+const defaultProducts = [
+  {_id:'p1', name:'Strawberry Dream', description:'Fresh, fruity & creamy', price:199, image:'https://t3.ftcdn.net/jpg/08/33/72/28/360_F_833722893_vkpfXvPDG4Xae7QHbAGjDOuSV8fuMtsG.jpg'},
+  {_id:'p2', name:'Chocolate Deluxe', description:'Rich cocoa goodness', price:229, image:'https://media.gettyimages.com/id/157472912/photo/ice-cream-composition-on-a-bowl.jpg?s=612x612&w=gi&k=20&c=AniWX1OhaarUxCkgjUoKiA3bKVllK0upCylW6Z0PCMQ='},
+  {_id:'p3', name:'Vanilla Classic', description:'nice test Buy one get one free', price:179, image:'https://cdn.pixabay.com/photo/2019/08/12/13/45/ice-cream-4401300_640.jpg'},
+  {_id:'p4', name:'Icecream three balls in wafer', description:'Simple & timeless', price:190, image:'https://media.gettyimages.com/id/135170559/photo/icecream-three-balls-in-wafer.jpg?s=1024x1024&w=gi&k=20&c=S7224JGDzKMEsKgxa1Y4aaKcRd_2PMMWVHD5jzPfCYs='},
+  {_id:'p5', name:'Mango Mania', description:'Tropical & tangy', price:249, image:'https://uppercrustindia.com/2019/media/postassets/2019May15/eca30824eb558de0.png'},
+  {_id:'p6', name:'magnum ice cream', description:'Refreshing with a crunch', price:220, image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEaT1DyiP89u87NOhDXdE3P7yFkF9aqLo-Ng&s'},
+  {_id:'p7', name:'Cookie Dough Delight', description:'Sweet doughy bites', price:239, image:'https://www.keep-calm-and-eat-ice-cream.com/wp-content/uploads/2022/09/Cookie-dough-ice-cream-hero-03.jpg'},
+  {_id:'p8', name:'Pistachio Perfection', description:'Nutty & creamy', price:259, image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfi4xJC9r7fJGowEhBrxxG3nfcGzNz1Bh8Fw&s'}
+];
+let products = JSON.parse(localStorage.getItem('products')||'null') || defaultProducts;
+let cart = JSON.parse(localStorage.getItem('cart')||'[]');
+let wishlist = JSON.parse(localStorage.getItem('wishlist')||'[]');
+let users = JSON.parse(localStorage.getItem('users')||'[]'); // [{username,email,password,role}]
+let session = JSON.parse(localStorage.getItem('session')||'null'); // {username, role}
+let orders = JSON.parse(localStorage.getItem('orders')||'[]'); // [{id,total,status,items}]
+
+function save(key,val){ localStorage.setItem(key, JSON.stringify(val)); }
+function updateCartCount(){ document.getElementById('cartCount').textContent = cart.reduce((s,i)=>s+i.qty,0); }
+function updateWishCount(){ document.getElementById('wishCount').textContent = wishlist.length; }
+updateCartCount(); updateWishCount();
+
+/* Login link state */
+(function(){
+  const loginLink = document.getElementById('loginLink');
+  const signupLink = document.getElementById('signupLink');
+  if(session){
+    loginLink.textContent = 'Logout';
+    loginLink.dataset.target = 'home';
+    loginLink.addEventListener('click', (e)=>{ e.preventDefault(); session=null; save('session',null); alert('Logged out'); location.reload(); });
+    signupLink.style.display='none';
+  }
+})();
+
+/* Wishlist & Cart modals */
+function openWishlist(){ document.getElementById('wishlistModal').style.display='flex'; renderWishlist(); }
+function closeWishlist(){ document.getElementById('wishlistModal').style.display='none'; }
+function openCart(){ document.getElementById('cartModal').style.display='flex'; renderCart(); }
+function closeCart(){ document.getElementById('cartModal').style.display='none'; }
+
+function addToCart(product){
+  const existing = cart.find(i=>i._id===product._id);
+  if(existing){ existing.qty += 1; } else { cart.push({...product, qty:1}); }
+  save('cart',cart); updateCartCount(); renderCart();
+}
+function addToWishlist(product){
+  if(!wishlist.find(i=>i._id===product._id)){ wishlist.push(product); save('wishlist',wishlist); updateWishCount(); renderWishlist(); }
+}
+function removeFromWishlist(id){
+  wishlist = wishlist.filter(i=>i._id!==id); save('wishlist',wishlist); updateWishCount(); renderWishlist();
+}
+function removeFromCart(id){
+  cart = cart.filter(i=>i._id!==id); save('cart',cart); updateCartCount(); renderCart();
+}
+function changeQty(id, delta){
+  const item = cart.find(i=>i._id===id);
+  if(!item) return;
+  item.qty += delta;
+  if(item.qty<=0) removeFromCart(id);
+  save('cart',cart); updateCartCount(); renderCart();
+}
+function renderWishlist(){
+  const el = document.getElementById('wishItems');
+  el.innerHTML = wishlist.length ? wishlist.map(i=>`
+    <div class="cart-item">
+      <div><strong>${i.name}</strong><div class="muted">₹${i.price}</div></div>
+      <div class="qty-controls">
+        <button class="btn" style="padding:6px 12px" onclick='addToCart(${JSON.stringify(i)})'>Add to Cart</button>
+        <button class="remove" onclick="removeFromWishlist('${i._id}')">Remove</button>
+      </div>
+    </div>
+  `).join('') : '<div class="muted">Your wishlist is empty.</div>';
+}
+function renderCart(){
+  const itemsEl = document.getElementById('cartItems');
+  const totalEl = document.getElementById('cartTotal');
+  itemsEl.innerHTML = cart.length ? cart.map(i=>`
+    <div class="cart-item">
+      <div><strong>${i.name}</strong><div class="muted">₹${i.price}</div></div>
+      <div class="qty-controls">
+        <button class="btn" style="padding:6px 12px" onclick="changeQty('${i._id}',-1)">−</button>
+        <span>${i.qty}</span>
+        <button class="btn" style="padding:6px 12px" onclick="changeQty('${i._id}',1)">+</button>
+        <button class="remove" onclick="removeFromCart('${i._id}')">Remove</button>
+      </div>
+    </div>
+  `).join('') : '<div class="muted">Your cart is empty.</div>';
+  const total = cart.reduce((sum,i)=>sum+i.price*i.qty,0);
+  totalEl.textContent = total.toFixed(2);
+}
+
+/* Products grid & filters */
+function renderProducts(list){
+  const grid = document.getElementById('productGrid');
+  grid.innerHTML = list.map(p=>`
+    <div class="card">
+      <img src="${p.image}" alt="${p.name}" loading="lazy">
+      <h3>${p.name}</h3>
+      <p>${p.description}</p>
+      <div class="price">₹${p.price}</div>
+      <div class="card-actions">
+        <button class="btn" onclick='addToCart(${JSON.stringify(p)})'>Add to Cart</button>
+        <button class="btn" onclick='addToWishlist(${JSON.stringify(p)})'>Wishlist</button>
+      </div>
+    </div>
+  `).join('');
+}
+renderProducts(products);
+
+document.getElementById('applyFilters').addEventListener('click', ()=>{
+  const q = (document.getElementById('searchInput').value||'').toLowerCase();
+  const min = parseFloat(document.getElementById('minPrice').value||'0');
+  const max = parseFloat(document.getElementById('maxPrice').value||'999999');
+  const filtered = products.filter(p=>{
+    const matchName = p.name.toLowerCase().includes(q);
+    const matchPrice = p.price>=min && p.price<=max;
+    return matchName && matchPrice;
+  });
+  renderProducts(filtered);
+});
+
+/* Feedback & Contact (mock) */
+document.getElementById('feedbackForm').addEventListener('submit',(e)=>{
+  e.preventDefault();
+  const data = Object.fromEntries(new FormData(e.target).entries());
+  console.log('Feedback:', data);
+  alert('Thank you for your feedback!');
+  e.target.reset();
+});
+document.getElementById('contactForm').addEventListener('submit',(e)=>{
+  e.preventDefault();
+  const data = Object.fromEntries(new FormData(e.target).entries());
+  console.log('Contact:', data);
+  alert('Message sent!');
+  e.target.reset();
+});
+
+/* Auth (local demo) */
+const loginForm = document.getElementById('loginForm');
+if(loginForm){
+  loginForm.addEventListener('submit',(e)=>{
+    e.preventDefault();
+    const {username,password} = Object.fromEntries(new FormData(loginForm).entries());
+    const user = users.find(u=>u.username===username && u.password===password);
+    if(!user){ alert('Invalid credentials'); return; }
+    session = {username:user.username, role:user.role||'user'};
+    save('session',session);
+    alert('Logged in');
+    showSection('home');
+    location.reload();
+  });
+}
+const signupForm = document.getElementById('signupForm');
+if(signupForm){
+  signupForm.addEventListener('submit',(e)=>{
+    e.preventDefault();
+    const data = Object.fromEntries(new FormData(signupForm).entries());
+    if(users.find(u=>u.username===data.username)){ alert('Username already exists'); return; }
+    users.push({username:data.username,email:data.email,password:data.password,role:'user'});
+    save('users',users);
+    alert('Account created. Please login.');
+    showSection('login');
+  });
+}
+
+/* Admin (local demo) */
+function refreshAdminTable(){
+  const tbody = document.querySelector('#adminTable tbody');
+  tbody.innerHTML = products.map(p=>`
+    <tr>
+      <td>${p.name}</td><td>₹${p.price}</td>
+      <td>
+        <button class="btn" onclick="editProduct('${p._id}')">Edit</button>
+        <button class="btn" onclick="deleteProduct('${p._id}')">Delete</button>
+      </td>
+    </tr>
+  `).join('');
+}
+refreshAdminTable();
+
+document.getElementById('addProductForm').addEventListener('submit',(e)=>{
+  e.preventDefault();
+  if(!session || session.role!=='admin'){ alert('Admin only'); return; }
+  const data = Object.fromEntries(new FormData(e.target).entries());
+  const newP = {_id:'p'+(Date.now()), name:data.name, price:parseFloat(data.price), image:data.image, description:data.description};
+  products.push(newP); save('products',products);
+  alert('Flavor added'); e.target.reset();
+  renderProducts(products); refreshAdminTable();
+});
+function editProduct(id){
+  if(!session || session.role!=='admin'){ alert('Admin only'); return; }
+  const p = products.find(pp=>pp._id===id);
+  if(!p) return;
+  const name = prompt('New name:', p.name);
+  const price = parseFloat(prompt('New price:', p.price));
+  const image = prompt('New image URL:', p.image);
+  const description = prompt('New description:', p.description);
+  Object.assign(p,{name,price,image,description});
+  save('products',products);
+  alert('Updated');
+  renderProducts(products); refreshAdminTable();
+}
+function deleteProduct(id){
+  if(!session || session.role!=='admin'){ alert('Admin only'); return; }
+  products = products.filter(p=>p._id!==id);
+  save('products',products);
+  alert('Deleted');
+  renderProducts(products); refreshAdminTable();
+}
+
+/* Promo (mock) */
+document.getElementById('applyPromo').addEventListener('click', ()=>{
+  const code = document.getElementById('promoCode').value.trim().toUpperCase();
+  const total = cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const promoMsg = document.getElementById('promoMsg');
+  let discount = 0;
+  if(code==='WELCOME10'){ discount = 10; }
+  else if(code==='FESTIVE20'){ discount = total*0.20; }
+  else { promoMsg.textContent = 'Invalid code'; return; }
+  const newTotal = Math.max(0, total - discount);
+  document.getElementById('cartTotal').textContent = newTotal.toFixed(2);
+  promoMsg.textContent = `Applied: -₹${discount.toFixed(2)}`;
+  save('promo',{code,discount});
+});
+
+/* Orders (local demo) */
+function renderOrders(){
+  const tbody = document.querySelector('#ordersTable tbody');
+  tbody.innerHTML = orders.length ? orders.map(o=>`
+    <tr>
+      <td>${o.id}</td>
+      <td>₹${o.total.toFixed(2)}</td>
+      <td>${o.status}</td>
+      <td>${o.items.map(i=>`${i.name} x${i.qty}`).join(', ')}</td>
+    </tr>
+  `).join('') : '<tr><td colspan="4" class="muted">No orders yet.</td></tr>';
+}
+renderOrders();
+
+/* Checkout (mock) */
+function mockCheckout(target){
+  if(cart.length===0){ alert('Your cart is empty'); return; }
+  const total = parseFloat(document.getElementById('cartTotal').textContent||'0') || cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const order = {
+    id: 'ORD-'+Date.now(),
+    total,
+    status: target==='success' ? 'confirmed' : 'cancelled',
+    items: cart.map(i=>({name:i.name, qty:i.qty}))
+  };
+  orders.unshift(order); save('orders',orders);
+  renderOrders();
+  if(target==='success'){ clearCart(); showSection('success'); }
+  else{ showSection('cancel'); }
+  closeCart();
+}
+function clearCart(){ cart=[]; save('cart',cart); updateCartCount(); }
+
+/* Demo admin user helper */
+(function ensureAdmin(){
+  if(!users.find(u=>u.username==='admin')){
+    users.push({username:'admin',email:'admin@example.com',password:'admin123',role:'admin'});
+    save('users',users);
+    console.log('Demo admin created: admin / admin123');
+  }
+})();
+</script>
+</body>
+</html>
